@@ -1,12 +1,12 @@
 #if canImport(SwiftCompilerPlugin)
-import SwiftCompilerPlugin
-import SwiftSyntaxMacros
+  import SwiftCompilerPlugin
+  import SwiftSyntaxMacros
 
-@main
-struct StoragePlugin: CompilerPlugin {
+  @main
+  struct StoragePlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
-        StorageMacro.self,
-        NonStorageMacro.self
+      StorageMacro.self,
+      NonStorageMacro.self,
     ]
-}
+  }
 #endif
