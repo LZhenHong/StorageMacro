@@ -99,9 +99,16 @@ public enum StorageMacro: MemberAttributeMacro {
     guard !bindings.isEmpty,
           let property = bindings.first,
           let propertyName = property.pattern.as(IdentifierPatternSyntax.self)?.identifier.text,
-          let _ = property.initializer,
           property.accessorBlock == nil // Skip computed properties
     else {
+      return []
+    }
+
+    // Check if property has initializer OR is optional type (which has implicit nil)
+    let hasInitializer = property.initializer != nil
+    let isOptionalType = isOptional(property.typeAnnotation?.type)
+
+    guard hasInitializer || isOptionalType else {
       return []
     }
 
@@ -120,5 +127,24 @@ public enum StorageMacro: MemberAttributeMacro {
       @AppStorage("\(raw: prefix).\(raw: declName.lowercased()).\(raw: propertyName.lowercased())", store: (UserDefaults(suiteName: "\(raw: suiteName)") ?? .standard))
       """,
     ]
+  }
+
+  /// Check if a type is optional (T? or Optional<T>)
+  private static func isOptional(_ type: TypeSyntax?) -> Bool {
+    guard let type else { return false }
+
+    // Check for T? syntax
+    if type.is(OptionalTypeSyntax.self) {
+      return true
+    }
+
+    // Check for Optional<T> syntax
+    if let identifierType = type.as(IdentifierTypeSyntax.self),
+       identifierType.name.text == "Optional"
+    {
+      return true
+    }
+
+    return false
   }
 }

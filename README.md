@@ -9,6 +9,7 @@ A Swift Macro that automatically applies `@AppStorage` to properties, simplifyin
 ## Features
 
 - Automatically generates `@AppStorage` attributes for stored properties
+- Supports optional types without explicit initializers (`var name: String?`)
 - Customizable key prefix and UserDefaults suite name
 - Supports both `struct` and `class` types
 - Opt-out mechanism with `@nonstorage`
@@ -27,7 +28,7 @@ Add the following to your `Package.swift`:
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/LZhenHong/StorageMacro.git", from: "0.0.1")
+  .package(url: "https://github.com/LZhenHong/StorageMacro.git", from: "0.0.3")
 ]
 ```
 
@@ -93,17 +94,18 @@ The macro automatically skips:
 - `let` constants
 - `private` or `fileprivate` properties
 - Computed properties
-- Properties without default values
+- Properties without default values (except optional types)
 - Properties already marked with `@AppStorage`
 
 ```swift
 @storage
 struct Settings {
   var stored = true           // ✅ Gets @AppStorage
+  var name: String?           // ✅ Gets @AppStorage (optional type)
   let constant = "value"      // ⏭️ Skipped (constant)
   private var secret = ""     // ⏭️ Skipped (private)
   var computed: Int { 42 }    // ⏭️ Skipped (computed)
-  var noDefault: String       // ⏭️ Skipped (no default value)
+  var noDefault: String       // ⏭️ Skipped (no default value, non-optional)
 }
 ```
 

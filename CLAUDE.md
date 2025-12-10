@@ -28,7 +28,7 @@ This is a Swift Macro package that automatically applies `@AppStorage` attribute
 ### Macros
 
 **`@storage(prefix:suiteName:)`** (MemberAttributeMacro): Applied to a struct/class, automatically adds `@AppStorage` to all `var` properties that:
-- Have an initializer (default value)
+- Have an initializer (default value) OR are optional types (`T?` or `Optional<T>`)
 - Are not marked `private` or `fileprivate`
 - Are not marked with `@nonstorage`
 - Are not computed properties

@@ -203,4 +203,76 @@ final class StorageTests: XCTestCase {
       macros: testMacros
     )
   }
+
+  func test_storage_macro_optional_without_initializer() {
+    assertMacroExpansion(
+      """
+      @storage
+      struct A {
+          var name: String?
+      }
+      """,
+      expandedSource: """
+      struct A {
+          @AppStorage("io.lzhlovesjyq.a.name", store: (UserDefaults(suiteName: "io.lzhlovesjyq.userdefaults") ?? .standard))
+          var name: String?
+      }
+      """,
+      macros: testMacros
+    )
+  }
+
+  func test_storage_macro_optional_with_initializer() {
+    assertMacroExpansion(
+      """
+      @storage
+      struct A {
+          var name: String? = nil
+      }
+      """,
+      expandedSource: """
+      struct A {
+          @AppStorage("io.lzhlovesjyq.a.name", store: (UserDefaults(suiteName: "io.lzhlovesjyq.userdefaults") ?? .standard))
+          var name: String? = nil
+      }
+      """,
+      macros: testMacros
+    )
+  }
+
+  func test_storage_macro_optional_with_non_nil_initializer() {
+    assertMacroExpansion(
+      """
+      @storage
+      struct A {
+          var name: String? = "default"
+      }
+      """,
+      expandedSource: """
+      struct A {
+          @AppStorage("io.lzhlovesjyq.a.name", store: (UserDefaults(suiteName: "io.lzhlovesjyq.userdefaults") ?? .standard))
+          var name: String? = "default"
+      }
+      """,
+      macros: testMacros
+    )
+  }
+
+  func test_storage_macro_optional_generic_syntax() {
+    assertMacroExpansion(
+      """
+      @storage
+      struct A {
+          var name: Optional<String>
+      }
+      """,
+      expandedSource: """
+      struct A {
+          @AppStorage("io.lzhlovesjyq.a.name", store: (UserDefaults(suiteName: "io.lzhlovesjyq.userdefaults") ?? .standard))
+          var name: Optional<String>
+      }
+      """,
+      macros: testMacros
+    )
+  }
 }
