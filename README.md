@@ -3,7 +3,7 @@
 A Swift Macro that automatically applies `@AppStorage` to properties, simplifying UserDefaults persistence in SwiftUI.
 
 [![Swift 5.9+](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
-[![Platforms](https://img.shields.io/badge/Platforms-iOS%2013+%20|%20macOS%2010.15+%20|%20tvOS%2013+%20|%20watchOS%206+-blue.svg)](https://developer.apple.com)
+[![Platforms](https://img.shields.io/badge/Platforms-iOS%2026+%20|%20macOS%2026+%20|%20tvOS%2013+%20|%20watchOS%206+-blue.svg)](https://developer.apple.com)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Features
@@ -18,7 +18,7 @@ A Swift Macro that automatically applies `@AppStorage` to properties, simplifyin
 ## Requirements
 
 - Swift 5.9+
-- iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 6.0+
+- iOS 26.0+ / macOS 26.0+ / tvOS 13.0+ / watchOS 6.0+
 
 ## Installation
 
